@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HCF and LCM Calculator</title>
+</head>
+<body>
+    <h1></h1> <br> <br> <hr>
+    <label for="inputNumbers">Enter numbers (separated by spaces):</label>
+    <input type="text" id="inputNumbers"><br> <br>
+    <button onclick="calculateHCFandLCM()">Find HCF and LCM</button>
+    <h2>Result:</h2>
+    <p id="result"></p>
+    <script>
+function gcd(a, b) {
+    while (b) {
+        let temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+function calculateHCFandLCM() {
+    let inputNumbers = document.getElementById('inputNumbers').value.split(' ').map(Number);
+    inputNumbers = inputNumbers.map(Math.abs); // Take the absolute value of input numbers
+
+    if (inputNumbers.length < 2) {
+        document.getElementById('result').innerText = "At least two numbers are required for HCF and LCM calculation.";
+        return;
+    }
+
+    let result = inputNumbers[0];
+    let lcm = inputNumbers[0];
+
+    for (let i = 1; i < inputNumbers.length; i++) {
+        result = gcd(result, inputNumbers[i]);
+        lcm = (lcm * inputNumbers[i]) / gcd(lcm, inputNumbers[i]);
+    }
+
+    document.getElementById('result').innerText = `HCF = ${result}\nLCM = ${lcm}`;
+}
+</script>
+</body>
+</html>
